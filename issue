@@ -1,0 +1,41 @@
+#include "ICM_20948.h" 
+
+#define USE_SPI       
+
+#define SERIAL_PORT Serial
+
+#define SPI_PORT 11
+#define CS_PIN 2     
+
+#define WIRE_PORT Wire
+#define AD0_VAL 1     
+  
+
+#ifdef USE_SPI
+ICM_20948_SPI myICM; 
+#else
+ICM_20948_I2C myICM; 
+#endif
+
+void setup()
+{
+  delay(2000);
+  SERIAL_PORT.begin(9600); 
+  SERIAL_PORT.println(F("ICM-20948 Example"));
+
+  delay(100);
+
+  while (SERIAL_PORT.available()) 
+    SERIAL_PORT.read();
+
+  SERIAL_PORT.println(F("Press any key to continue..."));
+
+  while (!SERIAL_PORT.available()) 
+    ;
+
+#ifdef USE_SPI
+  SPI_PORT.begin;
+#else
+  WIRE_PORT.begin();
+  WIRE_PORT.setClock(400000);
+#endif
